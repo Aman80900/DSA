@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        
+        // Create a list to store the final result.
+        List<List<Integer>> list = new ArrayList<>();
+        
+        // If the root is null, return an empty list.
+        if (root == null) 
+            return list;
+
+        // Create a queue to perform level order traversal.
+        Queue<TreeNode> que = new LinkedList();
+
+        // Add the root node to the queue.
+        que.add(root);
+
+        // Perform level order traversal.
+        while (!que.isEmpty()) {
+            // Create a temporary list to store the values of nodes at the current level.
+            List<Integer> temp = new ArrayList<>();
+            int size = que.size();
+            
+            // Process all nodes at the current level.
+            for (int i = 0; i < size; i++) {
+                // Remove the front node from the queue.
+                TreeNode node = que.remove();
+                
+                // Add the value of the node to the temporary list.
+                temp.add(node.val);
+                
+                // Add the left and right children of the current node to the queue for the next level.
+                if (node.left != null)
+                    que.add(node.left);
+                if (node.right != null)
+                    que.add(node.right);
+            }
+
+            // Add the temporary list to the front of the final result list.
+            // This will result in the bottom-up order traversal.
+            list.add(0, temp);
+        }
+
+        // The 'list' now contains the level order traversal in a bottom-up manner.
+        return list;
+    }
+}
